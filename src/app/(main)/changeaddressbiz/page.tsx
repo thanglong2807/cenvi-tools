@@ -34,10 +34,9 @@ function ChangeAddressBiz() {
       if (savedToken) setToken(savedToken);
       const res = await axios.get(provinceAPI ?? '');
       setProvinceList(res.data.data || []);
-
     };
     fetchData();
-  }, []);
+  }, [provinceAPI]);
   const dataCompanyType = [
     { value: '1', label: 'Công ty TNHH' },
     { value: '2', label: 'Công ty Cổ phần' },
@@ -48,7 +47,7 @@ function ChangeAddressBiz() {
       axios.get(wardAPI(province))
         .then(res => setWardList(res.data.data || []));
     }
-  }, [province]);
+  }, [province, wardAPI]);
 
   const addRep = () =>
     setReps([
@@ -96,7 +95,7 @@ function ChangeAddressBiz() {
       if (!res.data) throw new Error('Lỗi khi gửi dữ liệu.');
 
       setResultLink(res.data.folder_id);
-    } catch (err) {
+    } catch {
       alert('Có lỗi xảy ra. Vui lòng thử lại.');
       setResultLink('');
     }
