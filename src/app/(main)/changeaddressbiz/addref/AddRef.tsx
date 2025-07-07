@@ -146,6 +146,7 @@ const dataPositions = [
     { id: uuidv4(), name: "Phụ trách kế toán" },
   ];
   
+
 export function AddRef({
     rep,
     idx,
@@ -233,7 +234,9 @@ export function AddRef({
                 <div className="row w-full mb-2 ">
                     <div className="col-6 w-full flex gap-3">
                         <Select value={rep.position} onValueChange={val => handleChange('position', val)}>
-                            <SelectTrigger className='w-full'><SelectValue placeholder="Chức danh" >Chức danh</SelectValue></SelectTrigger>
+                            <SelectTrigger className='w-full'>
+                                <SelectValue placeholder="Chức danh" />
+                            </SelectTrigger>
                             <SelectContent>
                                 {positions.map((pos: any) => (
                                     <SelectItem key={pos.id} value={pos.name}>{pos.name}</SelectItem>
@@ -246,7 +249,7 @@ export function AddRef({
                             onValueChange={value => handleChange('gender', Number(value))}
                         >
                             <SelectTrigger className='w-full'>
-                                <SelectValue placeholder="Giới tính" >Giới tính</SelectValue>
+                                <SelectValue placeholder="Giới tính" />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="0">♂ Nam</SelectItem>

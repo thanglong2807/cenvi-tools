@@ -27,7 +27,6 @@ function ChangeAddressBiz() {
   const [ownerAddressPermanent, setOwnerAddressPermanent] = useState('');
   const [ownerAddressContact, setOwnerAddressContact] = useState('');
   const provinceAPI = process.env.NEXT_PUBLIC_API_PROVICE;
-  const wardAPI = (code: string) => `${provinceAPI}/${code}/wards`;
   useEffect(() => {
     const fetchData = async () => {
       const savedToken = localStorage.getItem('api_token');
@@ -43,11 +42,13 @@ function ChangeAddressBiz() {
     { value: '3', label: 'Doanh nghiệp tư nhân' },
   ]
   useEffect(() => {
+  const wardAPI = (code: string) => `${provinceAPI}/${code}/wards`;
+
     if (province) {
       axios.get(wardAPI(province))
         .then(res => setWardList(res.data.data || []));
     }
-  }, [province, wardAPI]);
+  }, [province]);
 
   const addRep = () =>
     setReps([
