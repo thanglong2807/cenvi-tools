@@ -3,12 +3,13 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Image from "next/image";
 
 const Header = () => {
   const [tokenVisible, setTokenVisible] = useState(false);
   const [token, setToken] = useState('');
   const [isDark, setIsDark] = useState(false);
-
+  const [apiToken, setApiToken] = useState('');
   // Sync dark mode with localStorage and OS
   React.useEffect(() => {
     const saved = localStorage.getItem('theme');
@@ -19,6 +20,8 @@ const Header = () => {
       document.documentElement.classList.remove('dark');
       setIsDark(false);
     }
+    ;
+    setApiToken(localStorage.getItem('api_token') || '');
   }, []);
 
   const toggleDark = () => {
@@ -51,23 +54,37 @@ const Header = () => {
           <Link href="/businessstatus" className="hover:underline dark:text-amber-300">Tình trạng doanh nghiệp</Link>
         </li>
       </ul>
-      <div className="flex gap-2"><Button variant="outline" size="sm" onClick={toggleDark} aria-label="Toggle dark mode">
-        {isDark ? '🌞' : '🌙'}
-      </Button>
-      <Button variant="outline" size="sm" onClick={() => setTokenVisible(!tokenVisible)}>🔐 Token</Button>
+      <div className="flex gap-2 items-center">
+        <Button variant="outline" size="sm" onClick={toggleDark} aria-label="Toggle dark mode">
+          {isDark ? '🌞' : '🌙'}
+        </Button>
+        <Button variant="outline" size="sm" onClick={() => setTokenVisible(!tokenVisible)}>🔐 Token</Button>
       {tokenVisible && (
-          <div className="flex gap-2 items-center">
-            <Input value={token} onChange={e => setToken(e.target.value)} placeholder="Nhập token..." className="w-40 bg-white" />
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                localStorage.setItem('api_token', token);
-                alert('Đã lưu token');
-                setTokenVisible(false)
-              }}>
-              Lưu
-            </Button>
+          <div className="flex gap-2  items-center">
+            <Input value={apiToken || token} onChange={e => setToken(e.target.value)} placeholder="Nhập token..." className="w-40 bg-white" />
+            {
+              apiToken ? (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setTokenVisible(false)
+                  }}>
+                  <Image src="/close.png" alt="close" width={12} height={12} className="" />
+                </Button>
+              ) : (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    localStorage.setItem('api_token', token);
+                    alert('Đã lưu token');
+                    setTokenVisible(false)
+                  }}>
+                  Lưu
+                </Button>
+              )
+            }
           </div>
         )}</div>
       </div>

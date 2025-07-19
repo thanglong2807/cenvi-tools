@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+
 interface Rep {
     name: string;
     gender: number;
@@ -11,7 +12,7 @@ interface Rep {
     address_permanent: string;
     address_contact: string;
     email: string;
-    phone_number: number
+    phone: string
 }
 
 interface AddRefProps {
@@ -19,9 +20,13 @@ interface AddRefProps {
     idx: number;
     setReps: React.Dispatch<React.SetStateAction<Rep[]>>;
     reps: Rep[];
-    ownerName?: string;
+    email?: string;
+    phone?: string;
+    ownerName?: string; 
     ownerAddressPermanent?: string;
     ownerAddressContact?: string;
+    ownerPhone?: string;
+    ownerEmail?: string;
 }
 const dataPositions = [
     { id: uuidv4(), name: "Giám đốc" },
@@ -154,11 +159,14 @@ export function AddRef({
     reps,
     ownerName = '',
     ownerAddressPermanent = '',
-    ownerAddressContact = ''
+    ownerAddressContact = '',
+    ownerPhone = '',
+    ownerEmail = '',
 }: AddRefProps) {
     const handleChange = (field: keyof Rep, value: string | number) => {
         if (reps[idx][field] === value) return; // Không đổi thì không set lại
         const newReps = [...reps];
+        
         newReps[idx] = { ...newReps[idx], [field]: value };
         setReps(newReps);
     };
@@ -181,14 +189,28 @@ export function AddRef({
             if (
                 rep.name === ownerName &&
                 rep.address_permanent === ownerAddressPermanent &&
-                rep.address_contact === ownerAddressContact
+                rep.address_contact === ownerAddressContact && rep.email === ownerEmail && rep.phone === ownerPhone
             ) return;
             const newReps = [...reps];
             newReps[idx] = {
                 ...newReps[idx],
                 name: ownerName,
+                email: ownerEmail,
+                phone: ownerPhone,
                 address_permanent: ownerAddressPermanent,
                 address_contact: ownerAddressContact
+            };
+            setReps(newReps);
+            console.log(newReps);
+        } else {
+            const newReps = [...reps];
+            newReps[idx] = {
+                ...newReps[idx],
+                name: '',
+                email: '',
+                phone: '',
+                address_permanent: '',
+                address_contact: ''
             };
             setReps(newReps);
         }
@@ -270,8 +292,8 @@ export function AddRef({
                 <Input
                     className='form-control mb-2'
                     placeholder="Số điện thoại"
-                    value={rep.phone_number}
-                    onChange={e => handleChange('phone_number', e.target.value)}
+                    value={rep.phone}
+                    onChange={e => handleChange('phone', e.target.value)}
                 />
                 <Input
                     className=""
@@ -286,6 +308,7 @@ export function AddRef({
                     onChange={e => handleChange('address_contact', e.target.value)}
                 />
             </div>
+            
         </div>
     );
 }

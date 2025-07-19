@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 };
 
 import Header from "./components/Header";
+import { GlobalProvider } from "./GlobalContext";
 
 export default function RootLayout({
   children,
@@ -29,9 +30,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
-        <Header />
-
-        <main className="pt-21 container mx-auto" >{children}</main>
+        <GlobalProvider>
+          <Header />
+          <main className="pt-21 container mx-auto">{children}</main>
+        </GlobalProvider>
       </body>
     </html>
   );
