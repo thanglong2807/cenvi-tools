@@ -78,7 +78,7 @@ function ChangeAddressBiz() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    let payload: any = {
+    const payload: any = {
       type: parseInt(companyType),
       company: {
         name: companyName,
@@ -109,7 +109,7 @@ function ChangeAddressBiz() {
     // companyType === '3' giữ nguyên, không thêm owner, members
     console.log(payload);
 
-    let token = localStorage.getItem('api_token');
+    const token = localStorage.getItem('api_token');
     setResultLink('');
     try {
       const endpoint = getApiEndpoint(companyType);
@@ -249,7 +249,7 @@ function ChangeAddressBiz() {
             {companyType === '2' && (
               <Members
                 ownerName={ownerName}
-                onChange={(data) => {
+                onChange={(data : any) => {
                   // Giả sử chỉ có 1 thành viên, sau có thể mở rộng thêm
                   setMembers([data]);
                 }}

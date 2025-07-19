@@ -1,19 +1,15 @@
 'use client';
+// eslint-disable-next-line
 import React, { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import NewAddress from '@/app/components/Newaddress';
 
-interface MemberProps {
-  ownerName: string;
-  onChange: (data: {
-    name: string;
-    address_permanent: string;
-    address_contact: string;
-  }) => void;
-}
 
-function Members({ ownerName, onChange }: MemberProps) {
+
+function Members({ ownerName, onChange } : any) {
+  
+
   const [name, setName] = useState(ownerName);
 
   const [memberPermanentAddress, setMemberPermanentAddress] = useState({
@@ -28,16 +24,17 @@ function Members({ ownerName, onChange }: MemberProps) {
     detail: ''
   });
 
-  const formatAddress = (addr: typeof memberPermanentAddress) =>
-    [addr.detail, addr.wardCode, addr.provinceCode].filter(Boolean).join(', ');
 
   useEffect(() => {
+    const formatAddress = (addr: typeof memberPermanentAddress) =>
+      [addr.detail, addr.wardCode, addr.provinceCode].filter(Boolean).join(', ');
+    if (!name) return; 
     onChange({
       name,
       address_permanent: formatAddress(memberPermanentAddress),
       address_contact: formatAddress(memberContactAddress)
     });
-  }, [name, memberPermanentAddress, memberContactAddress]);
+  }, [name, memberPermanentAddress, memberContactAddress, onChange]);
 
   return (
     <div className="flex flex-col gap-4">

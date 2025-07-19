@@ -1,6 +1,5 @@
 'use client'
 
-import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
@@ -8,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import React, { useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { useAddressData } from '@/app/GlobalContext'
 import { Input } from '@/components/ui/input'
 
