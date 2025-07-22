@@ -73,7 +73,11 @@ function ChangeAddressBiz() {
   const formatAddress = (addr: { provinceCode: string, wardCode: string, detail: string }) =>
     [addr.detail, addr.wardCode, addr.provinceCode].filter(Boolean).join(', ');
 
-  const getMembersPayload = () => members;
+  const getMembersPayload = () => members.map(m => ({
+  name: m.name,
+  address_permanent: m.address_permanent ?? '',
+  address_contact: m.address_contact ?? ''
+}));
 
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -120,6 +124,11 @@ function ChangeAddressBiz() {
         }
       });
       if (!res.data) throw new Error('Lỗi khi gửi dữ liệu.');
+      if(res.data.message==='Folder already exists'){
+        alert('Folder already exists');
+        return;
+      }
+      
       setResultLink(res.data.folder_id);
     } catch {
       alert('Có lỗi xảy ra. Vui lòng thử lại.');
@@ -128,7 +137,7 @@ function ChangeAddressBiz() {
   };
 
   return (
-    <div className="mt-20 pb-40  p-6 rounded shadow">
+    <div className="mt-20 pb-40  p-6 rounded shadow-2xl">
       <form className="flex flex-col gap-4 " onSubmit={handleSubmit}>
         {/* Thông tin công ty */}
 
@@ -249,9 +258,8 @@ function ChangeAddressBiz() {
             {companyType === '2' && (
               <Members
                 ownerName={ownerName}
-                onChange={(data : any) => {
-                  // Giả sử chỉ có 1 thành viên, sau có thể mở rộng thêm
-                  setMembers([data]);
+                onChange={(data: any[]) => {
+                  setMembers(data);
                 }}
               />
             )}

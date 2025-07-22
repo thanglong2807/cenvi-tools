@@ -37,7 +37,7 @@ const Header = () => {
   };
 
   return (
-    <header className=" p-4 fixed w-full  border-b border-gray-300 flex justify-center  dark:bg-black dark:border-gray-700 dark:text-white">
+    <header className=" p-4 fixed w-full  border-b border-gray-300 bg-white shadow-lg flex justify-center  dark:bg-black dark:border-gray-700 ">
       <div className="flex items-center justify-between container">
         <h1 className="text-2xl text-amber-400 font-bold">Cenvi Tools</h1>
       <ul className="flex gap-4 list-none">
